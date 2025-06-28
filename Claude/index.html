@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Claude Portfolio Agency</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Section */
+        .header {
+            background-color: #000;
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            margin-bottom: 80px;
+        }
+
+        .project-item {
+            aspect-ratio: 1;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .project-item:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .project-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-item:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-title {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* Coffee section styling */
+        .coffee-item {
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .coffee-content {
+            text-align: center;
+        }
+
+        .coffee-icon {
+            width: 60px;
+            height: 60px;
+            background: #8B4513;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .coffee-text {
+            font-size: 24px;
+            font-weight: 300;
+            color: #333;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background-color: #000;
+            padding: 80px 0;
+        }
+
+        .cta-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .cta-text h2 {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: transparent;
+            border: 2px solid #8B5CF6;
+            color: #8B5CF6;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: #8B5CF6;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .testimonial {
+            position: relative;
+        }
+
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8B5CF6, #EC4899);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .testimonial-company {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .testimonial-role {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .testimonial-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #ccc;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        .testimonial-rating {
+            display: flex;
+            gap: 5px;
+        }
+
+        .star {
+            width: 20px;
+            height: 20px;
+            background: #FFD700;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cta-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .cta-text h2 {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 12px;
+            }
+        }
+
+        /* Image loading and fallback */
+        .project-item img {
+            transition: all 0.3s ease;
+        }
+
+        .project-item img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>Our Latest Projects</h1>
+        </div>
+    </header>
+
+    <!-- Projects Grid -->
+    <section class="projects-section">
+        <div class="container">
+            <div class="projects-grid">
+                <!-- Project 1 - Shoes -->
+                <div class="project-item">
+                    <img src="https://images.unsplash.com/photo-1750263102524-8f24f397b59b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw3Mnx8fGVufDB8fHx8fA%3D%3D" alt="Athletic Footwear">
+                    <div class="project-overlay">
+                        <div class="project-title">Athletic Footwear</div>
+                    </div>
+                </div>
+
+                <!-- Project 2 - Coffee -->
+                <div class="project-item coffee-item">
+                    <div class="coffee-content">
+                        <div class="coffee-icon">☕</div>
+                        <div class="coffee-text">Coffee</div>
+                    </div>
+                </div>
+
+                <!-- Project 3 - AirPods -->
+                <div class="project-item">
+                    <img src="https://images.unsplash.com/photo-1750639258774-9a714379a093?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw3fHx8ZW58MHx8fHx8" alt="Wireless Audio">
+                    <div class="project-overlay">
+                        <div class="project-title">Wireless Audio</div>
+                    </div>
+                </div>
+
+                <!-- Project 4 - Cosmetics -->
+                <div class="project-item">
+                    <img src="https://images.unsplash.com/photo-1749741296695-33ff785c2b93?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMXx8fGVufDB8fHx8fA%3D%3D" alt="Beauty Products">
+                    <div class="project-overlay">
+                        <div class="project-title">Beauty Products</div>
+                    </div>
+                </div>
+
+                <!-- Project 5 - Beauty -->
+                <div class="project-item">
+                    <img src="https://images.unsplash.com/photo-1749741326969-e1676b3bce43?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D" alt="Skincare Line">
+                    <div class="project-overlay">
+                        <div class="project-title">Skincare Line</div>
+                    </div>
+                </div>
+
+                <!-- Project 6 - Speaker -->
+                <div class="project-item">
+                    <img src="https://images.unsplash.com/photo-1749741355867-8d40976f2bfb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0OXx8fGVufDB8fHx8fA%3D%3D" alt="Smart Speaker">
+                    <div class="project-overlay">
+                        <div class="project-title">Smart Speaker</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-text">
+                    <h2>Ready to Work<br>With Us ?</h2>
+                    <a href="#" class="cta-button">Get a Quote</a>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-avatar">S</div>
+                    <div class="testimonial-company">Swarna</div>
+                    <div class="testimonial-role">Business CEO</div>
+                    <div class="testimonial-text">
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud."
+                    </div>
+                    <div class="testimonial-rating">
+                        <div class="star"></div>
+                        <div class="star"></div>
+                        <div class="star"></div>
+                        <div class="star"></div>
+                        <div class="star"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
